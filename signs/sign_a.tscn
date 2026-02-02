@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://cptw2xp8eff0o"]
+
+[ext_resource type="FontFile" uid="uid://lan7fo17a2rc" path="res://assets/font/HomeVideoBold-R90Dv.ttf" id="1_j30x5"]
+
+[node name="SignA" type="Node3D" unique_id=426180702]
+
+[node name="Label3D" type="Label3D" parent="." unique_id=1029298579]
+modulate = Color(0, 1, 0.6666667, 1)
+text = "FALLING
+_HURTS_"
+font = ExtResource("1_j30x5")
+font_size = 512
+outline_size = 0

@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://cfkd5pa3gpcwt"]
+
+[ext_resource type="FontFile" uid="uid://lan7fo17a2rc" path="res://assets/font/HomeVideoBold-R90Dv.ttf" id="1_58x8a"]
+
+[node name="SignB" type="Node3D" unique_id=426180702]
+
+[node name="Label3D" type="Label3D" parent="." unique_id=1029298579]
+modulate = Color(0, 1, 0.6666667, 1)
+text = "JETPACK
+FUEL IS
+LIMITED"
+font = ExtResource("1_58x8a")
+font_size = 512
+outline_size = 0

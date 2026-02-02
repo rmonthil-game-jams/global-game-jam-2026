@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://q6r5ljyngc2o"]
+
+[ext_resource type="Script" uid="uid://b2go4k0so0th6" path="res://target/target_manager.gd" id="1_rjhpq"]
+
+[node name="TargetManager" type="Node" unique_id=1826936947]
+script = ExtResource("1_rjhpq")

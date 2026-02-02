@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://bh85h0k0xibyl"]
+
+[ext_resource type="Script" uid="uid://c62ekpbqoe8sy" path="res://hud/restart.gd" id="1_nj7pv"]
+[ext_resource type="FontFile" uid="uid://lan7fo17a2rc" path="res://assets/font/HomeVideoBold-R90Dv.ttf" id="2_teel2"]
+
+[node name="Restart" type="Node3D" unique_id=1492578333]
+script = ExtResource("1_nj7pv")
+
+[node name="Label3DR" type="Label3D" parent="." unique_id=437451192]
+transform = Transform3D(1.3113416e-07, -1, 4.371139e-08, -3.821371e-15, 4.371139e-08, 1, -1, -1.3113416e-07, 1.9106855e-15, -3.2014214e-09, -3.2014214e-09, 1.1246521)
+double_sided = false
+no_depth_test = true
+modulate = Color(0, 1, 0.6666667, 1)
+text = "R"
+font = ExtResource("2_teel2")
+font_size = 480
+outline_size = 0
+
+[node name="Label3DRestart" type="Label3D" parent="." unique_id=1030464528]
+transform = Transform3D(1.3113416e-07, -1, 4.371139e-08, -3.821371e-15, 4.371139e-08, 1, -1, -1.3113416e-07, 1.9106855e-15, -3.2014214e-09, -3.2014214e-09, -0.31895292)
+double_sided = false
+no_depth_test = true
+modulate = Color(0, 1, 0.6666667, 1)
+text = "RESTART"
+font = ExtResource("2_teel2")
+font_size = 480
+outline_size = 0
+horizontal_alignment = 0

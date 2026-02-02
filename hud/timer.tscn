@@ -1,0 +1,76 @@
+[gd_scene format=3 uid="uid://cwdlu6ci4cdxr"]
+
+[ext_resource type="FontFile" uid="uid://lan7fo17a2rc" path="res://assets/font/HomeVideoBold-R90Dv.ttf" id="2_6ht0x"]
+[ext_resource type="Script" uid="uid://cipea7xtvy7w5" path="res://hud/timer.gd" id="2_mbfuw"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qt3e1"]
+no_depth_test = true
+shading_mode = 0
+diffuse_mode = 3
+specular_mode = 1
+albedo_color = Color(0, 1, 0.66666675, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_qt3e1"]
+material = SubResource("StandardMaterial3D_qt3e1")
+top_radius = 1.0
+height = 0.25
+radial_segments = 12
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v6ogt"]
+no_depth_test = true
+shading_mode = 0
+diffuse_mode = 3
+specular_mode = 1
+albedo_color = Color(0, 0.5, 0.33333337, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_6ht0x"]
+material = SubResource("StandardMaterial3D_v6ogt")
+top_radius = 1.0
+height = 0.25
+radial_segments = 12
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6ht0x"]
+render_priority = 1
+no_depth_test = true
+shading_mode = 0
+diffuse_mode = 3
+specular_mode = 1
+albedo_color = Color(0, 0.5, 0.33333337, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_mbfuw"]
+material = SubResource("StandardMaterial3D_6ht0x")
+radial_segments = 8
+rings = 4
+
+[node name="Timer" type="Node3D" unique_id=1492578333]
+script = ExtResource("2_mbfuw")
+
+[node name="Watch" type="Node3D" parent="." unique_id=711376842]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.19152415)
+
+[node name="Timer" type="MeshInstance3D" parent="Watch" unique_id=1928344451]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.2014214e-09, 0.099999994, 1)
+mesh = SubResource("CylinderMesh_qt3e1")
+
+[node name="Center" type="MeshInstance3D" parent="Watch" unique_id=1599723118]
+transform = Transform3D(0.125, 0, 0, 0, 1, 0, 0, 0, 0.125, -3.2014214e-09, 0.16245636, 1)
+mesh = SubResource("CylinderMesh_6ht0x")
+
+[node name="Aiguille" type="MeshInstance3D" parent="Watch" unique_id=1418607399]
+transform = Transform3D(-4.8981015e-09, -0.448222, 0.055394623, 0.125, -2.1855694e-08, 0, 2.421376e-09, 0.2215785, 0.1120555, -0.38450915, 0.26413667, 1.2133114)
+mesh = SubResource("CapsuleMesh_mbfuw")
+
+[node name="Aiguille2" type="MeshInstance3D" parent="Watch" unique_id=1014984209]
+transform = Transform3D(-1.255147e-09, -0.08040036, -0.12165724, 0.125, -1.5298985e-08, 0, -5.3178066e-09, -0.34064025, 0.028714411, -0.10723506, 0.26413667, 0.6772316)
+mesh = SubResource("CapsuleMesh_mbfuw")
+
+[node name="Label3D" type="Label3D" parent="." unique_id=437451192]
+transform = Transform3D(1.3113416e-07, -1, 4.371139e-08, -3.821371e-15, 4.371139e-08, 1, -1, -1.3113416e-07, 1.9106855e-15, -3.2014214e-09, -3.2014214e-09, -0.31895292)
+double_sided = false
+no_depth_test = true
+modulate = Color(0, 1, 0.6666667, 1)
+text = "12:48"
+font = ExtResource("2_6ht0x")
+font_size = 480
+outline_size = 0
+horizontal_alignment = 0

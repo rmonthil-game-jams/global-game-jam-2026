@@ -1,0 +1,174 @@
+[gd_scene format=3 uid="uid://dhqlbvffqpksj"]
+
+[ext_resource type="Script" uid="uid://yi2wunwhiw5d" path="res://level.gd" id="1_f2txt"]
+[ext_resource type="PackedScene" uid="uid://q6r5ljyngc2o" path="res://target/target_manager.tscn" id="2_1ainy"]
+[ext_resource type="VoxelGeneratorGraph" uid="uid://5ahighwu1hc2" path="res://generation/terrain_g.tres" id="3_n6hdu"]
+[ext_resource type="PackedScene" uid="uid://d0dlhsxf7qdsy" path="res://body_camera/body_camera_3d.tscn" id="4_km5ld"]
+[ext_resource type="PackedScene" uid="uid://cptw2xp8eff0o" path="res://signs/sign_a.tscn" id="5_8cye3"]
+[ext_resource type="PackedScene" uid="uid://cfkd5pa3gpcwt" path="res://signs/sign_b.tscn" id="6_2orkt"]
+[ext_resource type="PackedScene" uid="uid://b02fxvigaq8wt" path="res://intro/intro.tscn" id="7_n6hdu"]
+[ext_resource type="PackedScene" uid="uid://bcvm4w1mhc8om" path="res://signs/sign_c.tscn" id="8_km5ld"]
+
+[sub_resource type="Environment" id="Environment_feb5d"]
+background_mode = 1
+glow_enabled = true
+glow_intensity = 0.5
+glow_bloom = 0.5
+adjustment_enabled = true
+adjustment_contrast = 1.25
+
+[sub_resource type="VoxelMesherTransvoxel" id="VoxelMesherTransvoxel_80nbo"]
+texturing_mode = 2
+
+[sub_resource type="VoxelFormat" id="VoxelFormat_feb5d"]
+_data = [0, 1, 1, 0, 0, 1, 0, 0, 0]
+
+[sub_resource type="Shader" id="Shader_nq7hy"]
+code = "shader_type spatial;
+//render_mode unshaded, depth_draw_never, blend_mix;
+
+// From Voxel Tools API
+uniform int u_transition_mask;
+
+// Terrain color
+uniform vec3 color_array[16] : source_color;
+
+// Contours
+uniform float contour_spacing;
+uniform float contour_width;
+uniform vec3 contour_color : source_color;
+uniform float contour_opacity;
+
+// Data passed from vertex to fragmsssent
+varying vec4 v_indices;
+varying vec4 v_weights;
+
+vec4 decode_8bit_vec4_f(float v) {
+	uint i = floatBitsToUint(v);
+	return vec4(
+		float(i & uint(0xff)),
+		float((i >> uint(8)) & uint(0xff)),
+		float((i >> uint(16)) & uint(0xff)),
+		float((i >> uint(24)) & uint(0xff)));
+}
+
+//uvec4 decode_8bit_vec4_i(float v) {
+	//uint i = floatBitsToUint(v);
+	//return uvec4(
+		//i & uint(0xff),
+		//(i >> uint(8)) & uint(0xff),
+		//(i >> uint(16)) & uint(0xff),
+		//(i >> uint(24)) & uint(0xff)
+	//);
+//}
+
+float get_transvoxel_secondary_factor(int idata) {
+	int transition_mask = u_transition_mask & 0xff;
+
+	int cell_border_mask = idata & 63; // Which sides the cell is touching
+	int vertex_border_mask = (idata >> 8) & 63; // Which sides the vertex is touching
+	// If the vertex is near a side where there is a low-resolution neighbor,
+	// move it to secondary position
+	int m = transition_mask & cell_border_mask;
+	float t = float(m != 0);
+	// If the vertex lies on one or more sides, and at least one side has no low-resolution neighbor,
+	// don't move the vertex.
+	t *= float((vertex_border_mask & ~transition_mask) == 0);
+
+	// Debugging
+	//t *= 0.5 + 0.5 * sin(TIME * 4.0);
+	//t *= 2.0;
+
+	return t;
+}
+
+vec3 get_transvoxel_position(vec3 vertex_pos, vec4 fdata) {
+	int idata = floatBitsToInt(fdata.a);
+
+	// Move vertices to smooth transitions
+	float secondary_factor = get_transvoxel_secondary_factor(idata);
+	vec3 secondary_position = fdata.xyz;
+	vec3 pos = mix(vertex_pos, secondary_position, secondary_factor);
+
+	// If the mesh combines transitions and the vertex belongs to a transition,
+	// when that transition isn't active we change the position of the vertices so
+	// all triangles will be degenerate and won't be visible.
+	// This is an alternative to rendering them separately,
+	// which has less draw calls and less mesh resources to create in Godot.
+	// Ideally I would tweak the index buffer like LOD does but Godot does not
+	// expose anything to use it that way.
+	int itransition = (idata >> 16) & 0xff; // Is the vertex on a transition mesh?
+	float transition_cull = float(itransition == 0 || (itransition & u_transition_mask) != 0);
+	pos *= transition_cull;
+
+	return pos;
+}
+void vertex() {
+	// extract vertex information
+	v_indices = decode_8bit_vec4_f(CUSTOM1.x);
+	v_weights = decode_8bit_vec4_f(CUSTOM1.y) / 255.0;
+
+	VERTEX = get_transvoxel_position(VERTEX, CUSTOM0);
+}
+
+void fragment() {
+	vec3 world_normal = normalize((INV_VIEW_MATRIX * vec4(NORMAL, 0.0)).xyz);
+	vec3 world_pos = (INV_VIEW_MATRIX * vec4(VERTEX, 1.0)).xyz;
+
+	// Biome blending
+	vec4 weights = v_weights;
+	// soften transitions
+	//weights = pow(weights, vec4(0.6));
+	//weights = smoothstep(0.0, 1.0, weights);
+	weights /= (weights.x + weights.y + weights.z + weights.w + 0.00001);
+	vec3 color = (
+		color_array[int(round(v_indices.x))] * weights.x +
+		color_array[int(round(v_indices.y))] * weights.y +
+		color_array[int(round(v_indices.z))] * weights.z +
+		color_array[int(round(v_indices.w))] * weights.w
+	);
+
+	ALBEDO = color;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_feb5d"]
+render_priority = 0
+shader = SubResource("Shader_nq7hy")
+shader_parameter/u_transition_mask = 0
+shader_parameter/color_array = PackedColorArray(0.54901963, 0.11764706, 1, 1, 0.4908002, 0.108, 0.9, 1, 0.40900016, 0.09, 0.75, 1, 0.32720014, 0.072000004, 0.6, 1, 0.27266678, 0.060000002, 0.5, 1)
+shader_parameter/contour_spacing = 0.5
+shader_parameter/contour_width = 0.25
+shader_parameter/contour_color = Color(0, 0, 0, 1)
+shader_parameter/contour_opacity = 0.3
+
+[node name="Level" type="Node" unique_id=2019070089]
+script = ExtResource("1_f2txt")
+
+[node name="TargetManager" parent="." unique_id=1826936947 instance=ExtResource("2_1ainy")]
+
+[node name="Environment" type="Node3D" parent="." unique_id=1376164104]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment" unique_id=319913223]
+environment = SubResource("Environment_feb5d")
+
+[node name="VoxelLodTerrain" type="VoxelLodTerrain" parent="." unique_id=1026057899]
+generator = ExtResource("3_n6hdu")
+mesher = SubResource("VoxelMesherTransvoxel_80nbo")
+format = SubResource("VoxelFormat_feb5d")
+material = SubResource("ShaderMaterial_feb5d")
+
+[node name="BodyCamera3D" parent="." unique_id=2097373965 instance=ExtResource("4_km5ld")]
+transform = Transform3D(-0.93959624, 0, -0.34228462, 0, 1, 0, 0.34228462, 0, -0.93959624, 26.295288, -51.720356, 103.03465)
+
+[node name="Intro" parent="." unique_id=1949401691 instance=ExtResource("7_n6hdu")]
+
+[node name="SignA" parent="." unique_id=426180702 instance=ExtResource("5_8cye3")]
+transform = Transform3D(0.441727, 0.24189521, -0.8639236, 0.092150316, 0.9456385, 0.3118917, 0.8924043, -0.21738183, 0.39542317, 39.82051, -51.247272, 89.88132)
+
+[node name="SignB" parent="." unique_id=710745254 instance=ExtResource("6_2orkt")]
+transform = Transform3D(0.13591339, 0.3725088, -0.9180221, 0.13543166, 0.91093606, 0.389684, 0.9814202, -0.17729257, 0.073358946, 42.903778, -50.020294, 104.79831)
+
+[node name="SignC" parent="." unique_id=1630391860 instance=ExtResource("8_km5ld")]
+transform = Transform3D(0.18269515, 0.22836517, -0.9562801, 0.12092709, 0.96004546, 0.25236705, 0.97570443, -0.16174647, 0.14778017, 44.192795, -42.44944, 96.216225)
+
+[editable path="BodyCamera3D"]

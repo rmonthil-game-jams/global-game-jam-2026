@@ -1,0 +1,206 @@
+[gd_scene format=3 uid="uid://d0dlhsxf7qdsy"]
+
+[ext_resource type="Script" uid="uid://dnt5cl12i8wqh" path="res://body_camera/body_camera_3d.gd" id="1_pkegk"]
+[ext_resource type="PackedScene" uid="uid://b3e6c6p5rbgdj" path="res://target/compass.tscn" id="2_xs1ih"]
+[ext_resource type="PackedScene" uid="uid://gtqcogghla8n" path="res://hud/life.tscn" id="3_ayas8"]
+[ext_resource type="PackedScene" uid="uid://cfmobbjaj356h" path="res://hud/jet_pack.tscn" id="4_dqaha"]
+[ext_resource type="PackedScene" uid="uid://biouxryxsbtix" path="res://hud/orbs.tscn" id="5_k3276"]
+[ext_resource type="Script" uid="uid://dkb8ltjc6067n" path="res://addons/raytraced_audio/raytraced_audio_player_3d.gd" id="6_ejse1"]
+[ext_resource type="Script" uid="uid://bjpmu5sklv5h8" path="res://addons/raytraced_audio/raytraced_audio_listener.gd" id="6_hd562"]
+[ext_resource type="PackedScene" uid="uid://cwdlu6ci4cdxr" path="res://hud/timer.tscn" id="6_rse2y"]
+[ext_resource type="AudioStream" uid="uid://cx0kf6wytytfg" path="res://assets/sound/SFX_FALL_DAMAGE.mp3" id="7_dr5cq"]
+[ext_resource type="AudioStream" uid="uid://ggrlgjs5h6ac" path="res://assets/sound/SFX_JETPACK.mp3" id="9_1cemm"]
+[ext_resource type="AudioStream" uid="uid://ix5qxpta1jx5" path="res://assets/sound/SFX_JUMP_LANDING.mp3" id="9_vonc6"]
+[ext_resource type="AudioStream" uid="uid://csiq3qjfdbny6" path="res://assets/sound/SFX_JUMP.mp3" id="11_d32a7"]
+[ext_resource type="AudioStream" uid="uid://cw8iwbfsskfx2" path="res://assets/sound/SFX_OUT_OF_FUEL.mp3" id="11_eulwg"]
+[ext_resource type="PackedScene" uid="uid://bh85h0k0xibyl" path="res://hud/restart.tscn" id="11_qfdh6"]
+[ext_resource type="AudioStream" uid="uid://dwff56guewm8w" path="res://assets/sound/SFX_FOOTSTEPS_01.mp3" id="12_b1jtk"]
+[ext_resource type="AudioStream" uid="uid://cig8gc3l51jmb" path="res://assets/sound/SFX_FOOTSTEPS_02.mp3" id="13_eulwg"]
+[ext_resource type="AudioStream" uid="uid://dxqje8q1610nd" path="res://assets/sound/SFX_FOOTSTEPS_03.mp3" id="14_rse2y"]
+[ext_resource type="AudioStream" uid="uid://cbb1hwyjjpyqt" path="res://assets/sound/SFX_FOOTSTEPS_04.mp3" id="15_qfdh6"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_xs1ih"]
+friction = 0.0
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ros5p"]
+radius = 4.0
+height = 16.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k3276"]
+no_depth_test = true
+shading_mode = 0
+diffuse_mode = 3
+specular_mode = 1
+albedo_color = Color(0.9490196, 0.13333334, 1, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_ejse1"]
+material = SubResource("StandardMaterial3D_k3276")
+radius = 0.125
+height = 0.25
+radial_segments = 8
+rings = 8
+
+[sub_resource type="Curve" id="Curve_hd562"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.25198942, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_v60wn"]
+radius = 4.0
+height = 20.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_8yj8i"]
+random_pitch = 1.4142135
+random_volume_offset_db = 3.0
+streams_count = 4
+stream_0/stream = ExtResource("12_b1jtk")
+stream_1/stream = ExtResource("13_eulwg")
+stream_2/stream = ExtResource("14_rse2y")
+stream_3/stream = ExtResource("15_qfdh6")
+
+[node name="BodyCamera3D" type="RigidBody3D" unique_id=2097373965]
+collision_layer = 0
+physics_material_override = SubResource("PhysicsMaterial_xs1ih")
+gravity_scale = 3.0
+continuous_cd = true
+max_contacts_reported = 1
+script = ExtResource("1_pkegk")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=644892905]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.2014214e-09, 2, -3.2014214e-09)
+shape = SubResource("CapsuleShape3D_ros5p")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=626168061]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -3.2014214e-09, 7.5, -3.2014214e-09)
+current = true
+fov = 90.0
+
+[node name="VoxelViewer" type="VoxelViewer" parent="Camera3D" unique_id=522662302]
+view_distance = 256
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Camera3D" unique_id=304593050]
+light_energy = 8.0
+shadow_enabled = true
+shadow_opacity = 0.5
+spot_range = 256.0
+
+[node name="Compass" parent="Camera3D" unique_id=1492578333 instance=ExtResource("2_xs1ih")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -3.2014214e-09, -5, -10)
+
+[node name="Life" parent="Camera3D" unique_id=155047659 instance=ExtResource("3_ayas8")]
+transform = Transform3D(-3.809701e-09, 0.087155804, -0.9961947, -1, -4.371139e-08, 0, -4.3545054e-08, 0.9961947, 0.087155804, -17.360653, 9.5, -12)
+
+[node name="JetPack" parent="Camera3D" unique_id=1276378066 instance=ExtResource("4_dqaha")]
+transform = Transform3D(-3.809701e-09, 0.087155804, -0.9961947, -1, -4.371139e-08, 0, -4.3545054e-08, 0.9961947, 0.087155804, -17.360653, 6.25, -12)
+
+[node name="Orbs" parent="Camera3D" unique_id=577179450 instance=ExtResource("5_k3276")]
+transform = Transform3D(-3.809701e-09, 0.087155804, -0.9961947, -1, -4.371139e-08, 0, -4.3545054e-08, 0.9961947, 0.087155804, -17.360653, 3.25, -12)
+
+[node name="TimerFixed" parent="Camera3D" unique_id=93466430 instance=ExtResource("6_rse2y")]
+transform = Transform3D(3.8096997e-09, -0.08715577, -0.9961947, -1, -4.371139e-08, 0, -4.3545054e-08, 0.9961947, -0.08715577, 12, 9.5, -12)
+visible = false
+is_fixed = true
+
+[node name="TimerMore" parent="Camera3D" unique_id=54551910 instance=ExtResource("6_rse2y")]
+transform = Transform3D(2.857275e-09, -0.08715577, -0.747146, -0.75, -4.371139e-08, -3.330669e-16, -3.265879e-08, 0.9961947, -0.06536683, 14, 6.5, -12)
+visible = false
+
+[node name="Restart" parent="Camera3D" unique_id=1318727684 instance=ExtResource("11_qfdh6")]
+transform = Transform3D(-3.809701e-09, 0.087155804, -0.9961947, -1, -4.371139e-08, 0, -4.3545054e-08, 0.9961947, 0.087155804, -17.360653, 0.5, -12)
+visible = false
+
+[node name="CPUParticles3D" type="CPUParticles3D" parent="Camera3D" unique_id=935757024]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.2014214e-09, -5, -3)
+emitting = false
+amount = 32
+lifetime = 0.5
+one_shot = true
+explosiveness = 0.85
+mesh = SubResource("SphereMesh_ejse1")
+emission_shape = 3
+emission_box_extents = Vector3(0, 0, 4)
+direction = Vector3(0, 1, 0)
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 32.0
+initial_velocity_max = 32.0
+damping_min = 64.0
+damping_max = 64.0
+scale_amount_curve = SubResource("Curve_hd562")
+
+[node name="RaytracedAudioListener" type="AudioListener3D" parent="Camera3D" unique_id=219484210]
+script = ExtResource("6_hd562")
+echo_room_size_multiplier = 0.499999999999984
+metadata/_custom_type_script = "uid://bjpmu5sklv5h8"
+
+[node name="JetPackSound" type="AudioStreamPlayer3D" parent="Camera3D" unique_id=2070777318]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -2.6226832e-07, -7.5, 6)
+stream = ExtResource("9_1cemm")
+parameters/looping = true
+script = ExtResource("6_ejse1")
+metadata/_custom_type_script = "uid://dkb8ltjc6067n"
+
+[node name="OutOfFuelSound" type="AudioStreamPlayer3D" parent="Camera3D" unique_id=204609311]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -2.6226832e-07, -7.5, 6)
+stream = ExtResource("11_eulwg")
+volume_db = 3.0
+script = ExtResource("6_ejse1")
+metadata/_custom_type_script = "uid://dkb8ltjc6067n"
+
+[node name="RayCast3D" type="RayCast3D" parent="." unique_id=1764296012]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.2014214e-09, 10, -3.2014214e-09)
+target_position = Vector3(0, -1024, 0)
+hit_back_faces = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=2109200020]
+visible = false
+mesh = SubResource("CapsuleMesh_v60wn")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=1461396038]
+light_energy = 8.0
+shadow_enabled = true
+shadow_opacity = 0.5
+omni_range = 256.0
+
+[node name="CoyoteTimer" type="Timer" parent="." unique_id=109823065]
+process_callback = 0
+wait_time = 0.5
+one_shot = true
+
+[node name="JetPackTimer" type="Timer" parent="." unique_id=270720340]
+process_callback = 0
+wait_time = 0.25
+one_shot = true
+
+[node name="FallDamageSound" type="AudioStreamPlayer3D" parent="." unique_id=1355674405]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.2014214e-09, -6, -3.2014214e-09)
+stream = ExtResource("7_dr5cq")
+volume_db = 6.0
+script = ExtResource("6_ejse1")
+metadata/_custom_type_script = "uid://dkb8ltjc6067n"
+
+[node name="JumpLandingSound" type="AudioStreamPlayer3D" parent="." unique_id=775219255]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.2014214e-09, -6, -3.2014214e-09)
+stream = ExtResource("9_vonc6")
+volume_db = 6.0
+script = ExtResource("6_ejse1")
+metadata/_custom_type_script = "uid://dkb8ltjc6067n"
+
+[node name="JumpSound" type="AudioStreamPlayer3D" parent="." unique_id=914073192]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.2014214e-09, -3.2014214e-09, -3.2014214e-09)
+stream = ExtResource("11_d32a7")
+volume_db = 2.0
+script = ExtResource("6_ejse1")
+metadata/_custom_type_script = "uid://dkb8ltjc6067n"
+
+[node name="FootstepsSound" type="AudioStreamPlayer3D" parent="." unique_id=235640302]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.2014214e-09, -13, -3.2014214e-09)
+stream = SubResource("AudioStreamRandomizer_8yj8i")
+volume_db = 3.0
+script = ExtResource("6_ejse1")
+metadata/_custom_type_script = "uid://dkb8ltjc6067n"
+
+[node name="FootStepTimer" type="Timer" parent="." unique_id=300941257]
+wait_time = 0.5
+
+[connection signal="timeout" from="CoyoteTimer" to="." method="_on_coyote_timer_timeout"]
+[connection signal="timeout" from="JetPackTimer" to="." method="_on_jet_pack_timer_timeout"]
+[connection signal="timeout" from="FootStepTimer" to="." method="_on_foot_step_timer_timeout"]

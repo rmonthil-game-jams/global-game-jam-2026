@@ -1,0 +1,119 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://41dreh7nmett"]
+
+[sub_resource type="Shader" id="Shader_nq7hy"]
+code = "shader_type spatial;
+//render_mode unshaded, depth_draw_never, blend_mix;
+
+// From Voxel Tools API
+uniform int u_transition_mask;
+
+// Terrain color
+uniform vec3 color_array[16] : source_color;
+
+// Contours
+uniform float contour_spacing;
+uniform float contour_width;
+uniform vec3 contour_color : source_color;
+uniform float contour_opacity;
+
+// Data passed from vertex to fragmsssent
+varying vec4 v_indices;
+varying vec4 v_weights;
+
+vec4 decode_8bit_vec4_f(float v) {
+	uint i = floatBitsToUint(v);
+	return vec4(
+		float(i & uint(0xff)),
+		float((i >> uint(8)) & uint(0xff)),
+		float((i >> uint(16)) & uint(0xff)),
+		float((i >> uint(24)) & uint(0xff)));
+}
+
+//uvec4 decode_8bit_vec4_i(float v) {
+	//uint i = floatBitsToUint(v);
+	//return uvec4(
+		//i & uint(0xff),
+		//(i >> uint(8)) & uint(0xff),
+		//(i >> uint(16)) & uint(0xff),
+		//(i >> uint(24)) & uint(0xff)
+	//);
+//}
+
+float get_transvoxel_secondary_factor(int idata) {
+	int transition_mask = u_transition_mask & 0xff;
+
+	int cell_border_mask = idata & 63; // Which sides the cell is touching
+	int vertex_border_mask = (idata >> 8) & 63; // Which sides the vertex is touching
+	// If the vertex is near a side where there is a low-resolution neighbor,
+	// move it to secondary position
+	int m = transition_mask & cell_border_mask;
+	float t = float(m != 0);
+	// If the vertex lies on one or more sides, and at least one side has no low-resolution neighbor,
+	// don't move the vertex.
+	t *= float((vertex_border_mask & ~transition_mask) == 0);
+
+	// Debugging
+	//t *= 0.5 + 0.5 * sin(TIME * 4.0);
+	//t *= 2.0;
+
+	return t;
+}
+
+vec3 get_transvoxel_position(vec3 vertex_pos, vec4 fdata) {
+	int idata = floatBitsToInt(fdata.a);
+
+	// Move vertices to smooth transitions
+	float secondary_factor = get_transvoxel_secondary_factor(idata);
+	vec3 secondary_position = fdata.xyz;
+	vec3 pos = mix(vertex_pos, secondary_position, secondary_factor);
+
+	// If the mesh combines transitions and the vertex belongs to a transition,
+	// when that transition isn't active we change the position of the vertices so
+	// all triangles will be degenerate and won't be visible.
+	// This is an alternative to rendering them separately,
+	// which has less draw calls and less mesh resources to create in Godot.
+	// Ideally I would tweak the index buffer like LOD does but Godot does not
+	// expose anything to use it that way.
+	int itransition = (idata >> 16) & 0xff; // Is the vertex on a transition mesh?
+	float transition_cull = float(itransition == 0 || (itransition & u_transition_mask) != 0);
+	pos *= transition_cull;
+
+	return pos;
+}
+void vertex() {
+	// extract vertex information
+	v_indices = decode_8bit_vec4_f(CUSTOM1.x);
+	v_weights = decode_8bit_vec4_f(CUSTOM1.y) / 255.0;
+
+	VERTEX = get_transvoxel_position(VERTEX, CUSTOM0);
+}
+
+void fragment() {
+	vec3 world_normal = normalize((INV_VIEW_MATRIX * vec4(NORMAL, 0.0)).xyz);
+	vec3 world_pos = (INV_VIEW_MATRIX * vec4(VERTEX, 1.0)).xyz;
+
+	// Biome blending
+	vec4 weights = v_weights;
+	// soften transitions
+	//weights = pow(weights, vec4(0.6));
+	//weights = smoothstep(0.0, 1.0, weights);
+	weights /= (weights.x + weights.y + weights.z + weights.w + 0.00001);
+	vec3 color = (
+		color_array[int(round(v_indices.x))] * weights.x +
+		color_array[int(round(v_indices.y))] * weights.y +
+		color_array[int(round(v_indices.z))] * weights.z +
+		color_array[int(round(v_indices.w))] * weights.w
+	);
+
+	ALBEDO = color;
+}"
+
+[resource]
+render_priority = 0
+shader = SubResource("Shader_nq7hy")
+shader_parameter/u_transition_mask = 0
+shader_parameter/color_array = PackedColorArray(0.41960785, 1, 1, 1, 0.59607846, 0.67058825, 1, 1, 0.79607844, 0.29803923, 1, 1, 0.5803922, 0.9098039, 0.7176471, 1, 1, 0, 0, 1)
+shader_parameter/contour_spacing = 0.5
+shader_parameter/contour_width = 0.25
+shader_parameter/contour_color = Color(0, 0, 0, 1)
+shader_parameter/contour_opacity = 0.3

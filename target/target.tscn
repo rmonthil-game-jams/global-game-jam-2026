@@ -1,0 +1,62 @@
+[gd_scene format=3 uid="uid://bxjgllsrccnlu"]
+
+[ext_resource type="Script" uid="uid://c7v2fqni1ccv0" path="res://target/target.gd" id="1_gdpld"]
+[ext_resource type="AudioStream" uid="uid://c57aw3yt6sbpa" path="res://assets/sound/SFX_ORB_AURA.mp3" id="2_sp8cc"]
+[ext_resource type="Script" uid="uid://dkb8ltjc6067n" path="res://addons/raytraced_audio/raytraced_audio_player_3d.gd" id="3_itqbd"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_gdpld"]
+radius = 5.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gdpld"]
+transparency = 1
+cull_mode = 2
+shading_mode = 0
+diffuse_mode = 3
+specular_mode = 1
+albedo_color = Color(0.9666667, 0.5, 1, 0.7490196)
+
+[sub_resource type="SphereMesh" id="SphereMesh_gdpld"]
+material = SubResource("StandardMaterial3D_gdpld")
+radius = 5.0
+height = 10.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_kswpl"]
+radius = 10.0
+
+[node name="Target" type="Node3D" unique_id=2108942410 groups=["target"]]
+script = ExtResource("1_gdpld")
+
+[node name="Area3D" type="Area3D" parent="." unique_id=179824342]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=2009364710]
+shape = SubResource("SphereShape3D_gdpld")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=2107784275]
+mesh = SubResource("SphereMesh_gdpld")
+
+[node name="Area3DExterior" type="Area3D" parent="." unique_id=82283077]
+collision_layer = 0
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3DExterior" unique_id=491899853]
+shape = SubResource("SphereShape3D_kswpl")
+
+[node name="Timer" type="Timer" parent="." unique_id=1871013811]
+process_callback = 0
+one_shot = true
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=1083879582]
+light_energy = 2.0
+omni_range = 64.0
+
+[node name="OrbAuraSound" type="AudioStreamPlayer3D" parent="." unique_id=854880296]
+stream = ExtResource("2_sp8cc")
+volume_db = 12.0
+autoplay = true
+parameters/looping = true
+script = ExtResource("3_itqbd")
+metadata/_custom_type_script = "uid://dkb8ltjc6067n"
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -1,0 +1,56 @@
+[gd_scene format=3 uid="uid://b3e6c6p5rbgdj"]
+
+[ext_resource type="Script" uid="uid://r36v2f1ensxr" path="res://target/compass.gd" id="1_gdpld"]
+[ext_resource type="FontFile" uid="uid://lan7fo17a2rc" path="res://assets/font/HomeVideoBold-R90Dv.ttf" id="2_1ofn2"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gdpld"]
+no_depth_test = true
+shading_mode = 0
+diffuse_mode = 3
+specular_mode = 1
+albedo_color = Color(0.9490196, 0.13333334, 1, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_gdpld"]
+material = SubResource("StandardMaterial3D_gdpld")
+radius = 0.1
+radial_segments = 8
+rings = 2
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_gdpld"]
+material = SubResource("StandardMaterial3D_gdpld")
+top_radius = 0.0
+bottom_radius = 0.4
+height = 0.6
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_3pxwk"]
+radius = 16.0
+
+[node name="Compass" type="Node3D" unique_id=1492578333]
+script = ExtResource("1_gdpld")
+
+[node name="Anchor" type="Node3D" parent="." unique_id=1322128024]
+transform = Transform3D(2, 0, 0, 0, -8.742278e-08, 2, 0, -2, -8.742278e-08, 0, 0, 0)
+
+[node name="Elongated" type="MeshInstance3D" parent="Anchor" unique_id=818328788]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4231865, -6.5309386e-08)
+mesh = SubResource("CapsuleMesh_gdpld")
+
+[node name="Point" type="MeshInstance3D" parent="Anchor" unique_id=1620093555]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4467583, -6.5309386e-08)
+mesh = SubResource("CylinderMesh_gdpld")
+
+[node name="Label3D" type="Label3D" parent="." unique_id=539173378]
+transform = Transform3D(1, 0, 0, 0, -4.3711385e-08, 0.9999999, 0, -0.9999999, -4.3711385e-08, 0, 0, 0)
+no_depth_test = true
+modulate = Color(0.9490196, 0.13333334, 1, 1)
+text = "128m"
+font = ExtResource("2_1ofn2")
+font_size = 256
+outline_size = 0
+
+[node name="Area3D" type="Area3D" parent="." unique_id=240369544]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1026631491]
+shape = SubResource("SphereShape3D_3pxwk")

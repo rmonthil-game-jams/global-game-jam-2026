@@ -1,0 +1,747 @@
+[gd_resource type="VoxelGeneratorGraph" format=3 uid="uid://xw2k7qf8yqcn"]
+
+[ext_resource type="VoxelGraphFunction" uid="uid://c6gtcmb3wxhuo" path="res://generation/_ref_sdf_gf.tres" id="1_43136"]
+[ext_resource type="VoxelGraphFunction" path="res://generation/sharpen_gf.tres" id="2_cq5q3"]
+
+[sub_resource type="ZN_FastNoiseLite" id="ZN_FastNoiseLite_je24e"]
+seed = 21
+period = 96.0001
+fractal_octaves = 1
+
+[sub_resource type="ZN_FastNoiseLite" id="ZN_FastNoiseLite_c78g8"]
+seed = 9
+period = 256.0001
+fractal_octaves = 1
+
+[sub_resource type="ZN_FastNoiseLite" id="ZN_FastNoiseLite_u1iis"]
+seed = 30
+period = 64.0001
+fractal_octaves = 1
+
+[sub_resource type="ZN_FastNoiseLite" id="ZN_FastNoiseLite_k2hir"]
+seed = 6
+period = 256.0001
+fractal_octaves = 1
+
+[sub_resource type="ZN_FastNoiseLite" id="ZN_FastNoiseLite_40qp5"]
+seed = 11
+period = 96.0001
+fractal_octaves = 1
+
+[sub_resource type="ZN_FastNoiseLite" id="ZN_FastNoiseLite_p2nl4"]
+seed = 16
+period = 64.0001
+fractal_octaves = 1
+
+[sub_resource type="ZN_FastNoiseLite" id="ZN_FastNoiseLite_ieeuk"]
+seed = 15
+period = 64.0001
+fractal_octaves = 1
+
+[sub_resource type="ZN_FastNoiseLite" id="ZN_FastNoiseLite_u1cys"]
+seed = 10
+period = 96.0001
+fractal_octaves = 1
+
+[sub_resource type="ZN_FastNoiseLite" id="ZN_FastNoiseLite_8l55i"]
+seed = 10
+period = 64.0001
+fractal_octaves = 1
+
+[sub_resource type="ZN_FastNoiseLite" id="ZN_FastNoiseLite_2if1b"]
+seed = 7
+period = 256.0001
+fractal_octaves = 1
+
+[sub_resource type="ZN_FastNoiseLite" id="ZN_FastNoiseLite_a1iex"]
+seed = 26
+period = 64.0001
+fractal_octaves = 1
+
+[sub_resource type="ZN_FastNoiseLite" id="ZN_FastNoiseLite_4mtu4"]
+seed = 13
+period = 64.0001
+fractal_octaves = 1
+
+[sub_resource type="ZN_FastNoiseLite" id="ZN_FastNoiseLite_egq4o"]
+seed = 14
+period = 64.0001
+fractal_octaves = 1
+
+[sub_resource type="ZN_FastNoiseLite" id="ZN_FastNoiseLite_nqbx0"]
+seed = 11
+period = 64.0001
+fractal_octaves = 1
+
+[sub_resource type="ZN_FastNoiseLite" id="ZN_FastNoiseLite_mhel7"]
+seed = 11
+period = 96.0001
+fractal_octaves = 1
+
+[resource]
+graph_data = {
+"connections": [[239, 0, 238, 0], [238, 0, 233, 1], [238, 0, 230, 1], [237, 0, 226, 0], [236, 0, 229, 0], [236, 0, 233, 0], [235, 0, 228, 0], [235, 0, 239, 0], [234, 0, 235, 0], [233, 0, 223, 0], [228, 0, 227, 1], [228, 0, 226, 1], [99, 0, 118, 0], [226, 0, 224, 0], [221, 0, 231, 0], [220, 0, 205, 0], [92, 0, 117, 0], [219, 0, 211, 0], [219, 0, 216, 0], [218, 0, 206, 0], [218, 0, 210, 0], [217, 0, 218, 0], [216, 0, 202, 0], [215, 0, 219, 0], [214, 0, 209, 0], [214, 0, 220, 0], [213, 0, 214, 0], [212, 0, 201, 0], [211, 0, 212, 0], [210, 0, 205, 1], [210, 0, 209, 1], [209, 0, 204, 0], [207, 0, 212, 1], [207, 0, 216, 1], [206, 0, 207, 0], [205, 0, 203, 0], [159, 0, 158, 0], [159, 0, 161, 0], [227, 0, 225, 0], [100, 0, 121, 0], [154, 0, 152, 0], [152, 0, 150, 0], [152, 0, 151, 0], [157, 0, 210, 1], [157, 0, 207, 1], [128, 0, 184, 1], [128, 0, 185, 1], [158, 0, 168, 0], [188, 0, 190, 0], [126, 0, 151, 1], [126, 0, 153, 1], [185, 0, 189, 1], [185, 0, 188, 1], [160, 0, 159, 0], [229, 0, 230, 0], [102, 0, 126, 0], [161, 0, 162, 0], [230, 0, 222, 0], [103, 0, 116, 0], [162, 0, 169, 0], [116, 0, 105, 0], [116, 0, 122, 1], [175, 0, 176, 0], [231, 0, 227, 0], [231, 0, 237, 0], [104, 0, 157, 0], [163, 0, 148, 0], [117, 0, 102, 1], [117, 0, 120, 0], [117, 0, 121, 1], [176, 0, 193, 0], [232, 0, 236, 0], [105, 0, 104, 1], [164, 0, 149, 0], [118, 0, 102, 0], [118, 0, 100, 0], [177, 0, 179, 0], [120, 0, 104, 0], [120, 0, 122, 0], [179, 0, 178, 0], [179, 0, 188, 0], [150, 0, 153, 0], [121, 0, 124, 0], [180, 0, 173, 0], [151, 0, 163, 1], [151, 0, 164, 1], [122, 0, 128, 0], [181, 0, 192, 0], [153, 0, 158, 1], [153, 0, 162, 1], [124, 0, 228, 1], [124, 0, 238, 1], [165, 0, 164, 0], [165, 0, 166, 0], [166, 0, 163, 0], [167, 0, 165, 0], [170, 0, 171, 0], [171, 0, 185, 0], [171, 0, 186, 0], [173, 0, 175, 0], [173, 0, 181, 0], [178, 0, 189, 0], [184, 0, 181, 1], [184, 0, 176, 1], [186, 0, 184, 0], [189, 0, 191, 0], [196, 0, 4, 0], [197, 0, 196, 0], [199, 0, 196, 1], [200, 0, 196, 2]],
+"nodes": {
+"100": {
+"auto_connect": false,
+"dynamic_inputs": [["a", null]],
+"expression": "1-a",
+"gui_position": Vector2(0, 500),
+"type": "Expression"
+},
+"102": {
+"auto_connect": false,
+"gui_position": Vector2(180, 380),
+"type": "Multiply"
+},
+"103": {
+"auto_connect": true,
+"gui_position": Vector2(-180, 880),
+"noise": SubResource("ZN_FastNoiseLite_2if1b"),
+"type": "FastNoise2D",
+"x": 0.0,
+"y": 0.0
+},
+"104": {
+"auto_connect": false,
+"gui_position": Vector2(180, 1020),
+"type": "Multiply"
+},
+"105": {
+"auto_connect": false,
+"dynamic_inputs": [["a", null]],
+"expression": "1-a",
+"gui_position": Vector2(0, 1000),
+"type": "Expression"
+},
+"116": {
+"_function": ExtResource("2_cq5q3"),
+"a": 0.0,
+"auto_connect": true,
+"gui_position": Vector2(0, 880),
+"p": 0.999999999999968,
+"type": "Function"
+},
+"117": {
+"_function": ExtResource("2_cq5q3"),
+"a": 0.0,
+"auto_connect": true,
+"gui_position": Vector2(-260, 600),
+"p": 0.999999999999968,
+"type": "Function"
+},
+"118": {
+"_function": ExtResource("2_cq5q3"),
+"a": 0.0,
+"auto_connect": true,
+"gui_position": Vector2(0, 380),
+"p": 0.999999999999968,
+"type": "Function"
+},
+"120": {
+"auto_connect": false,
+"dynamic_inputs": [["a", null]],
+"expression": "1-a",
+"gui_position": Vector2(-260, 720),
+"type": "Expression"
+},
+"121": {
+"auto_connect": false,
+"gui_position": Vector2(180, 500),
+"type": "Multiply"
+},
+"122": {
+"auto_connect": false,
+"gui_position": Vector2(180, 900),
+"type": "Multiply"
+},
+"124": {
+"auto_connect": false,
+"b": 0.0,
+"gui_position": Vector2(1060, 700),
+"name": &"12, 13, 14, 15 Forest Pines",
+"type": "Add"
+},
+"126": {
+"auto_connect": false,
+"b": 0.0,
+"gui_position": Vector2(1200, 40),
+"name": &"0,1,2,3 Plain",
+"type": "Add"
+},
+"128": {
+"auto_connect": false,
+"b": 0.0,
+"gui_position": Vector2(1060, 1440),
+"name": &"4,5,6,7 Forest Green",
+"type": "Add"
+},
+"129": {
+"auto_connect": false,
+"gui_position": Vector2(-20, 260),
+"text": "Biome Generation",
+"type": "Comment"
+},
+"148": {
+"auto_connect": false,
+"gui_position": Vector2(2080, 40),
+"layer": 1,
+"name": &"1 Plain B",
+"type": "OutputWeight"
+},
+"149": {
+"auto_connect": false,
+"gui_position": Vector2(2080, -100),
+"layer": 0,
+"name": &"1 Plain A",
+"type": "OutputWeight"
+},
+"150": {
+"auto_connect": false,
+"dynamic_inputs": [["a", null]],
+"expression": "1-a",
+"gui_position": Vector2(1400, 180),
+"type": "Expression"
+},
+"151": {
+"auto_connect": false,
+"gui_position": Vector2(1580, 40),
+"type": "Multiply"
+},
+"152": {
+"_function": ExtResource("2_cq5q3"),
+"a": 0.0,
+"auto_connect": true,
+"gui_position": Vector2(1400, 40),
+"p": 0.999999999999968,
+"type": "Function"
+},
+"153": {
+"auto_connect": false,
+"gui_position": Vector2(1580, 180),
+"type": "Multiply"
+},
+"154": {
+"auto_connect": true,
+"gui_position": Vector2(1200, 200),
+"noise": SubResource("ZN_FastNoiseLite_u1cys"),
+"type": "FastNoise2D",
+"x": 0.0,
+"y": 0.0
+},
+"157": {
+"auto_connect": false,
+"b": 0.0,
+"gui_position": Vector2(1080, 2040),
+"name": &"8,9,10,11 Forest Red",
+"type": "Add"
+},
+"158": {
+"auto_connect": false,
+"gui_position": Vector2(1920, 180),
+"type": "Multiply"
+},
+"159": {
+"_function": ExtResource("2_cq5q3"),
+"a": 0.0,
+"auto_connect": true,
+"gui_position": Vector2(1740, 180),
+"p": 0.999999999999968,
+"type": "Function"
+},
+"160": {
+"auto_connect": true,
+"gui_position": Vector2(1540, 320),
+"noise": SubResource("ZN_FastNoiseLite_8l55i"),
+"type": "FastNoise2D",
+"x": 0.0,
+"y": 0.0
+},
+"161": {
+"auto_connect": false,
+"dynamic_inputs": [["a", null]],
+"expression": "1-a",
+"gui_position": Vector2(1740, 320),
+"type": "Expression"
+},
+"162": {
+"auto_connect": false,
+"gui_position": Vector2(1920, 320),
+"type": "Multiply"
+},
+"163": {
+"auto_connect": false,
+"gui_position": Vector2(1920, 40),
+"type": "Multiply"
+},
+"164": {
+"auto_connect": false,
+"gui_position": Vector2(1920, -100),
+"type": "Multiply"
+},
+"165": {
+"_function": ExtResource("2_cq5q3"),
+"a": 0.0,
+"auto_connect": true,
+"gui_position": Vector2(1740, -100),
+"p": 0.999999999999968,
+"type": "Function"
+},
+"166": {
+"auto_connect": false,
+"dynamic_inputs": [["a", null]],
+"expression": "1-a",
+"gui_position": Vector2(1740, 40),
+"type": "Expression"
+},
+"167": {
+"auto_connect": true,
+"gui_position": Vector2(1540, -100),
+"noise": SubResource("ZN_FastNoiseLite_nqbx0"),
+"type": "FastNoise2D",
+"x": 0.0,
+"y": 0.0
+},
+"168": {
+"auto_connect": false,
+"gui_position": Vector2(2080, 180),
+"layer": 2,
+"name": &"2 Plain C",
+"type": "OutputWeight"
+},
+"169": {
+"auto_connect": false,
+"gui_position": Vector2(2080, 320),
+"layer": 3,
+"name": &"3 Plain D",
+"type": "OutputWeight"
+},
+"170": {
+"auto_connect": true,
+"gui_position": Vector2(1160, 1600),
+"noise": SubResource("ZN_FastNoiseLite_mhel7"),
+"type": "FastNoise2D",
+"x": 0.0,
+"y": 0.0
+},
+"171": {
+"_function": ExtResource("2_cq5q3"),
+"a": 0.0,
+"auto_connect": true,
+"gui_position": Vector2(1360, 1440),
+"p": 0.999999999999968,
+"type": "Function"
+},
+"173": {
+"_function": ExtResource("2_cq5q3"),
+"a": 0.0,
+"auto_connect": true,
+"gui_position": Vector2(1700, 1580),
+"p": 0.999999999999968,
+"type": "Function"
+},
+"175": {
+"auto_connect": false,
+"dynamic_inputs": [["a", null]],
+"expression": "1-a",
+"gui_position": Vector2(1700, 1720),
+"type": "Expression"
+},
+"176": {
+"auto_connect": false,
+"gui_position": Vector2(1880, 1720),
+"type": "Multiply"
+},
+"177": {
+"auto_connect": true,
+"gui_position": Vector2(1500, 1300),
+"noise": SubResource("ZN_FastNoiseLite_4mtu4"),
+"type": "FastNoise2D",
+"x": 0.0,
+"y": 0.0
+},
+"178": {
+"auto_connect": false,
+"dynamic_inputs": [["a", null]],
+"expression": "1-a",
+"gui_position": Vector2(1700, 1440),
+"type": "Expression"
+},
+"179": {
+"_function": ExtResource("2_cq5q3"),
+"a": 0.0,
+"auto_connect": true,
+"gui_position": Vector2(1700, 1300),
+"p": 0.999999999999968,
+"type": "Function"
+},
+"180": {
+"auto_connect": true,
+"gui_position": Vector2(1500, 1720),
+"noise": SubResource("ZN_FastNoiseLite_egq4o"),
+"type": "FastNoise2D",
+"x": 0.0,
+"y": 0.0
+},
+"181": {
+"auto_connect": false,
+"gui_position": Vector2(1880, 1580),
+"type": "Multiply"
+},
+"184": {
+"auto_connect": false,
+"gui_position": Vector2(1540, 1580),
+"type": "Multiply"
+},
+"185": {
+"auto_connect": false,
+"gui_position": Vector2(1540, 1440),
+"type": "Multiply"
+},
+"186": {
+"auto_connect": false,
+"dynamic_inputs": [["a", null]],
+"expression": "1-a",
+"gui_position": Vector2(1360, 1580),
+"type": "Expression"
+},
+"188": {
+"auto_connect": false,
+"gui_position": Vector2(1880, 1300),
+"type": "Multiply"
+},
+"189": {
+"auto_connect": false,
+"gui_position": Vector2(1880, 1440),
+"type": "Multiply"
+},
+"190": {
+"auto_connect": false,
+"gui_position": Vector2(2040, 1300),
+"layer": 4,
+"name": &"4 Forest A",
+"type": "OutputWeight"
+},
+"191": {
+"auto_connect": false,
+"gui_position": Vector2(2040, 1440),
+"layer": 5,
+"name": &"5 Forest B",
+"type": "OutputWeight"
+},
+"192": {
+"auto_connect": false,
+"gui_position": Vector2(2040, 1580),
+"layer": 6,
+"name": &"6 Forest C",
+"type": "OutputWeight"
+},
+"193": {
+"auto_connect": false,
+"gui_position": Vector2(2040, 1720),
+"layer": 7,
+"name": &"7 Forest D",
+"type": "OutputWeight"
+},
+"196": {
+"_function": ExtResource("1_43136"),
+"auto_connect": true,
+"gui_position": Vector2(-60, -80),
+"type": "Function",
+"x": 0.0,
+"y": 0.0,
+"z": 0.0
+},
+"197": {
+"auto_connect": false,
+"gui_position": Vector2(-180, -80),
+"type": "InputX"
+},
+"199": {
+"auto_connect": false,
+"gui_position": Vector2(-180, 0),
+"type": "InputY"
+},
+"200": {
+"auto_connect": false,
+"gui_position": Vector2(-180, 80),
+"type": "InputZ"
+},
+"201": {
+"auto_connect": false,
+"gui_position": Vector2(2020, 2320),
+"layer": 11,
+"name": &"11 Forest Red D",
+"type": "OutputWeight"
+},
+"202": {
+"auto_connect": false,
+"gui_position": Vector2(2020, 2180),
+"layer": 10,
+"name": &"10 Forest Red C",
+"type": "OutputWeight"
+},
+"203": {
+"auto_connect": false,
+"gui_position": Vector2(2020, 2040),
+"layer": 9,
+"name": &"9 Forest Red B",
+"type": "OutputWeight"
+},
+"204": {
+"auto_connect": false,
+"gui_position": Vector2(2020, 1900),
+"layer": 8,
+"name": &"8 Forest Red A",
+"type": "OutputWeight"
+},
+"205": {
+"auto_connect": false,
+"gui_position": Vector2(1860, 2040),
+"type": "Multiply"
+},
+"206": {
+"auto_connect": false,
+"dynamic_inputs": [["a", null]],
+"expression": "1-a",
+"gui_position": Vector2(1340, 2180),
+"type": "Expression"
+},
+"207": {
+"auto_connect": false,
+"gui_position": Vector2(1520, 2180),
+"type": "Multiply"
+},
+"209": {
+"auto_connect": false,
+"gui_position": Vector2(1860, 1900),
+"type": "Multiply"
+},
+"210": {
+"auto_connect": false,
+"gui_position": Vector2(1520, 2040),
+"type": "Multiply"
+},
+"211": {
+"auto_connect": false,
+"dynamic_inputs": [["a", null]],
+"expression": "1-a",
+"gui_position": Vector2(1680, 2320),
+"type": "Expression"
+},
+"212": {
+"auto_connect": false,
+"gui_position": Vector2(1860, 2320),
+"type": "Multiply"
+},
+"213": {
+"auto_connect": true,
+"gui_position": Vector2(1480, 1900),
+"noise": SubResource("ZN_FastNoiseLite_ieeuk"),
+"type": "FastNoise2D",
+"x": 0.0,
+"y": 0.0
+},
+"214": {
+"_function": ExtResource("2_cq5q3"),
+"a": 0.0,
+"auto_connect": true,
+"gui_position": Vector2(1680, 1900),
+"p": 0.999999999999968,
+"type": "Function"
+},
+"215": {
+"auto_connect": true,
+"gui_position": Vector2(1480, 2320),
+"noise": SubResource("ZN_FastNoiseLite_p2nl4"),
+"type": "FastNoise2D",
+"x": 0.0,
+"y": 0.0
+},
+"216": {
+"auto_connect": false,
+"gui_position": Vector2(1860, 2180),
+"type": "Multiply"
+},
+"217": {
+"auto_connect": true,
+"gui_position": Vector2(1140, 2200),
+"noise": SubResource("ZN_FastNoiseLite_40qp5"),
+"type": "FastNoise2D",
+"x": 0.0,
+"y": 0.0
+},
+"218": {
+"_function": ExtResource("2_cq5q3"),
+"a": 0.0,
+"auto_connect": true,
+"gui_position": Vector2(1340, 2040),
+"p": 0.999999999999968,
+"type": "Function"
+},
+"219": {
+"_function": ExtResource("2_cq5q3"),
+"a": 0.0,
+"auto_connect": true,
+"gui_position": Vector2(1680, 2180),
+"p": 0.999999999999968,
+"type": "Function"
+},
+"220": {
+"auto_connect": false,
+"dynamic_inputs": [["a", null]],
+"expression": "1-a",
+"gui_position": Vector2(1680, 2040),
+"type": "Expression"
+},
+"221": {
+"auto_connect": true,
+"gui_position": Vector2(1500, 560),
+"noise": SubResource("ZN_FastNoiseLite_u1iis"),
+"type": "FastNoise2D",
+"x": 0.0,
+"y": 0.0
+},
+"222": {
+"auto_connect": false,
+"gui_position": Vector2(2040, 980),
+"layer": 15,
+"name": &"15 Forest Pine D",
+"type": "OutputWeight"
+},
+"223": {
+"auto_connect": false,
+"gui_position": Vector2(2040, 840),
+"layer": 14,
+"name": &"14 Forest Bine C",
+"type": "OutputWeight"
+},
+"224": {
+"auto_connect": false,
+"gui_position": Vector2(2040, 700),
+"layer": 13,
+"name": &"13 Forest Pine B",
+"type": "OutputWeight"
+},
+"225": {
+"auto_connect": false,
+"gui_position": Vector2(2040, 560),
+"layer": 12,
+"name": &"12 Forest Pine A",
+"type": "OutputWeight"
+},
+"226": {
+"auto_connect": false,
+"gui_position": Vector2(1880, 700),
+"type": "Multiply"
+},
+"227": {
+"auto_connect": false,
+"gui_position": Vector2(1880, 560),
+"type": "Multiply"
+},
+"228": {
+"auto_connect": false,
+"gui_position": Vector2(1540, 700),
+"type": "Multiply"
+},
+"229": {
+"auto_connect": false,
+"dynamic_inputs": [["a", null]],
+"expression": "1-a",
+"gui_position": Vector2(1700, 980),
+"type": "Expression"
+},
+"230": {
+"auto_connect": false,
+"gui_position": Vector2(1880, 980),
+"type": "Multiply"
+},
+"231": {
+"_function": ExtResource("2_cq5q3"),
+"a": 0.0,
+"auto_connect": true,
+"gui_position": Vector2(1700, 560),
+"p": 0.999999999999968,
+"type": "Function"
+},
+"232": {
+"auto_connect": true,
+"gui_position": Vector2(1500, 980),
+"noise": SubResource("ZN_FastNoiseLite_a1iex"),
+"type": "FastNoise2D",
+"x": 0.0,
+"y": 0.0
+},
+"233": {
+"auto_connect": false,
+"gui_position": Vector2(1880, 840),
+"type": "Multiply"
+},
+"234": {
+"auto_connect": true,
+"gui_position": Vector2(1160, 860),
+"noise": SubResource("ZN_FastNoiseLite_je24e"),
+"type": "FastNoise2D",
+"x": 0.0,
+"y": 0.0
+},
+"235": {
+"_function": ExtResource("2_cq5q3"),
+"a": 0.0,
+"auto_connect": true,
+"gui_position": Vector2(1360, 700),
+"p": 0.999999999999968,
+"type": "Function"
+},
+"236": {
+"_function": ExtResource("2_cq5q3"),
+"a": 0.0,
+"auto_connect": true,
+"gui_position": Vector2(1700, 840),
+"p": 0.999999999999968,
+"type": "Function"
+},
+"237": {
+"auto_connect": false,
+"dynamic_inputs": [["a", null]],
+"expression": "1-a",
+"gui_position": Vector2(1700, 700),
+"type": "Expression"
+},
+"238": {
+"auto_connect": false,
+"gui_position": Vector2(1540, 840),
+"type": "Multiply"
+},
+"239": {
+"auto_connect": false,
+"dynamic_inputs": [["a", null]],
+"expression": "1-a",
+"gui_position": Vector2(1360, 840),
+"type": "Expression"
+},
+"4": {
+"auto_connect": true,
+"gui_position": Vector2(80, -80),
+"type": "OutputSDF"
+},
+"92": {
+"auto_connect": true,
+"gui_position": Vector2(-440, 600),
+"noise": SubResource("ZN_FastNoiseLite_k2hir"),
+"type": "FastNoise2D",
+"x": 0.0,
+"y": 0.0
+},
+"99": {
+"auto_connect": true,
+"gui_position": Vector2(-180, 380),
+"noise": SubResource("ZN_FastNoiseLite_c78g8"),
+"type": "FastNoise2D",
+"x": 0.0,
+"y": 0.0
+}
+},
+"version": 2
+}

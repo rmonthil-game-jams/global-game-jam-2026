@@ -1,0 +1,46 @@
+[gd_resource type="VoxelGraphFunction" format=3 uid="uid://coqhrdytod3be"]
+
+[resource]
+graph_data = {
+"connections": [[9, 0, 10, 0], [6, 0, 9, 0], [5, 0, 3, 1], [3, 0, 7, 0], [10, 0, 3, 0]],
+"nodes": {
+"10": {
+"auto_connect": false,
+"b": 0.5,
+"gui_position": Vector2(-520, 320),
+"type": "Multiply"
+},
+"3": {
+"auto_connect": false,
+"gui_position": Vector2(-380, 320),
+"type": "Pow"
+},
+"5": {
+"auto_connect": false,
+"gui_position": Vector2(-540, 440),
+"name": &"p",
+"type": "CustomInput"
+},
+"6": {
+"auto_connect": false,
+"gui_position": Vector2(-820, 320),
+"name": &"a",
+"type": "CustomInput"
+},
+"7": {
+"auto_connect": false,
+"gui_position": Vector2(-220, 320),
+"name": &"out",
+"type": "CustomOutput"
+},
+"9": {
+"auto_connect": false,
+"b": 1.0,
+"gui_position": Vector2(-660, 320),
+"type": "Add"
+}
+},
+"version": 2
+}
+input_definitions = [["a", "CustomInput", 0], ["p", "CustomInput", 0]]
+output_definitions = [["out", "CustomOutput", 0]]

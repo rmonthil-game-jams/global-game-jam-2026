@@ -1,0 +1,206 @@
+[gd_resource type="VoxelGeneratorGraph" format=3 uid="uid://5ahighwu1hc2"]
+
+[ext_resource type="VoxelGraphFunction" path="res://generation/sharpen_gf.tres" id="1_etpig"]
+
+[sub_resource type="ZN_FastNoiseLite" id="ZN_FastNoiseLite_etpig"]
+seed = 15
+period = 196.0001
+fractal_octaves = 2
+
+[sub_resource type="ZN_FastNoiseLite" id="ZN_FastNoiseLite_cquv4"]
+period = 160.0001
+
+[sub_resource type="ZN_FastNoiseLite" id="ZN_FastNoiseLite_wggqi"]
+seed = 6
+period = 160.0001
+
+[sub_resource type="ZN_FastNoiseLite" id="ZN_FastNoiseLite_dyac7"]
+seed = 2
+period = 160.0001
+
+[resource]
+graph_data = {
+"connections": [[276, 0, 253, 0], [268, 0, 271, 1], [267, 0, 271, 0], [266, 0, 269, 1], [265, 0, 269, 0], [259, 0, 266, 0], [258, 0, 246, 0], [258, 0, 254, 0], [257, 0, 249, 0], [257, 0, 251, 0], [256, 0, 254, 1], [269, 0, 270, 0], [240, 0, 245, 0], [253, 0, 256, 0], [253, 0, 246, 1], [270, 0, 260, 0], [241, 0, 242, 0], [241, 0, 244, 0], [254, 0, 268, 0], [271, 0, 270, 1], [242, 0, 243, 0], [255, 0, 258, 0], [255, 0, 251, 1], [255, 0, 259, 1], [243, 0, 244, 1], [244, 0, 240, 0], [274, 0, 255, 0], [275, 0, 257, 0], [246, 0, 267, 0], [249, 0, 259, 0], [251, 0, 265, 0]],
+"nodes": {
+"240": {
+"auto_connect": false,
+"b": 1023.9999999999671,
+"gui_position": Vector2(-305.297, 208.28015),
+"type": "Multiply"
+},
+"241": {
+"auto_connect": true,
+"gui_position": Vector2(-1000, 200),
+"noise": SubResource("ZN_FastNoiseLite_cquv4"),
+"type": "FastNoise3D",
+"x": 0.0,
+"y": 0.0,
+"z": 0.0
+},
+"242": {
+"auto_connect": false,
+"gui_position": Vector2(-785.297, 288.28015),
+"type": "Abs"
+},
+"243": {
+"auto_connect": false,
+"gui_position": Vector2(-645.297, 288.28015),
+"p": 1.999999999999936,
+"type": "Pow"
+},
+"244": {
+"auto_connect": false,
+"gui_position": Vector2(-485.297, 208.28015),
+"type": "Multiply"
+},
+"245": {
+"auto_connect": true,
+"gui_position": Vector2(-140, 200),
+"type": "OutputSDF"
+},
+"246": {
+"auto_connect": false,
+"gui_position": Vector2(-600, 1320),
+"type": "Multiply"
+},
+"249": {
+"auto_connect": false,
+"dynamic_inputs": [["a", null]],
+"expression": "1-a",
+"gui_position": Vector2(-780, 920),
+"type": "Expression"
+},
+"250": {
+"auto_connect": false,
+"gui_position": Vector2(-800, 680),
+"text": "Biome Generation",
+"type": "Comment"
+},
+"251": {
+"auto_connect": false,
+"gui_position": Vector2(-600, 800),
+"type": "Multiply"
+},
+"253": {
+"_function": ExtResource("1_etpig"),
+"a": 0.0,
+"auto_connect": true,
+"gui_position": Vector2(-780, 1300),
+"p": 0.999999999999968,
+"type": "Function"
+},
+"254": {
+"auto_connect": false,
+"gui_position": Vector2(-600, 1440),
+"type": "Multiply"
+},
+"255": {
+"_function": ExtResource("1_etpig"),
+"a": 0.0,
+"auto_connect": true,
+"gui_position": Vector2(-1040, 1020),
+"p": 0.999999999999968,
+"type": "Function"
+},
+"256": {
+"auto_connect": false,
+"dynamic_inputs": [["a", null]],
+"expression": "1-a",
+"gui_position": Vector2(-780, 1440),
+"type": "Expression"
+},
+"257": {
+"_function": ExtResource("1_etpig"),
+"a": 0.0,
+"auto_connect": true,
+"gui_position": Vector2(-780, 800),
+"p": 0.999999999999968,
+"type": "Function"
+},
+"258": {
+"auto_connect": false,
+"dynamic_inputs": [["a", null]],
+"expression": "1-a",
+"gui_position": Vector2(-1040, 1140),
+"type": "Expression"
+},
+"259": {
+"auto_connect": false,
+"gui_position": Vector2(-600, 920),
+"type": "Multiply"
+},
+"260": {
+"auto_connect": false,
+"gui_position": Vector2(300, 1060),
+"type": "OutputSingleTexture"
+},
+"265": {
+"auto_connect": false,
+"b": 0.0,
+"gui_position": Vector2(-420, 800),
+"type": "Multiply"
+},
+"266": {
+"auto_connect": false,
+"b": 0.999999999999968,
+"gui_position": Vector2(-420, 920),
+"type": "Multiply"
+},
+"267": {
+"auto_connect": false,
+"b": 1.999999999999936,
+"gui_position": Vector2(-420, 1320),
+"type": "Multiply"
+},
+"268": {
+"auto_connect": false,
+"b": 2.999999999999904,
+"gui_position": Vector2(-420, 1440),
+"type": "Multiply"
+},
+"269": {
+"auto_connect": false,
+"gui_position": Vector2(-220, 860),
+"type": "Add"
+},
+"270": {
+"auto_connect": false,
+"gui_position": Vector2(100, 1060),
+"type": "Add"
+},
+"271": {
+"auto_connect": false,
+"gui_position": Vector2(-220, 1360),
+"type": "Add"
+},
+"274": {
+"auto_connect": true,
+"gui_position": Vector2(-1260, 1020),
+"noise": SubResource("ZN_FastNoiseLite_wggqi"),
+"type": "FastNoise3D",
+"x": 0.0,
+"y": 0.0,
+"z": 0.0
+},
+"275": {
+"auto_connect": true,
+"gui_position": Vector2(-1000, 800),
+"noise": SubResource("ZN_FastNoiseLite_dyac7"),
+"type": "FastNoise3D",
+"x": 0.0,
+"y": 0.0,
+"z": 0.0
+},
+"276": {
+"auto_connect": true,
+"gui_position": Vector2(-1000, 1300),
+"noise": SubResource("ZN_FastNoiseLite_etpig"),
+"type": "FastNoise3D",
+"x": 0.0,
+"y": 0.0,
+"z": 0.0
+}
+},
+"version": 2
+}
+texture_mode = 1

@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://di4ukhxmdi2js"]
+
+[ext_resource type="Script" uid="uid://cob7md7q0qwe6" path="res://game.gd" id="1_fc0e3"]
+[ext_resource type="AudioStream" uid="uid://q8n5clf0wnuj" path="res://assets/sound/MUSIC_CAVE.mp3" id="2_e2o6t"]
+[ext_resource type="AudioStream" uid="uid://djuf31l7f7w3j" path="res://assets/sound/SFX_AMB.mp3" id="3_feb5d"]
+[ext_resource type="AudioStream" uid="uid://cx0kf6wytytfg" path="res://assets/sound/SFX_FALL_DAMAGE.mp3" id="4_7jktm"]
+[ext_resource type="AudioStream" uid="uid://cta87gcpgsibo" path="res://assets/sound/SFX_LOSE.mp3" id="4_fc0e3"]
+
+[node name="Game" type="Node" unique_id=790409142]
+script = ExtResource("1_fc0e3")
+
+[node name="AudioStreamPlayerMusic" type="AudioStreamPlayer" parent="." unique_id=1510665794]
+stream = ExtResource("2_e2o6t")
+autoplay = true
+parameters/looping = true
+
+[node name="AudioStreamPlayerAmb" type="AudioStreamPlayer" parent="." unique_id=1605891552]
+stream = ExtResource("3_feb5d")
+volume_db = 6.0
+autoplay = true
+parameters/looping = true
+
+[node name="AudioStreamPlayerLose1" type="AudioStreamPlayer" parent="." unique_id=348756310]
+stream = ExtResource("4_7jktm")
+
+[node name="AudioStreamPlayerLose2" type="AudioStreamPlayer" parent="." unique_id=1538048698]
+stream = ExtResource("4_fc0e3")
