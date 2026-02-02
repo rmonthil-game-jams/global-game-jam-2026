@@ -27,12 +27,12 @@ func _input(event: InputEvent) -> void:
 				var current_mode = DisplayServer.window_get_mode()
 				if current_mode == DisplayServer.WINDOW_MODE_FULLSCREEN:
 					DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
-			KEY_P:
-				var image = get_viewport().get_texture().get_image()
-				var date = Time.get_datetime_string_from_system()
-				var file_name = "screenshot-" + date + ".jpg"
-				var path = "res://screenshots/" + file_name
-				var dir = DirAccess.open("res://")
-				if not dir.dir_exists("screenshots"):
-					dir.make_dir("screenshots")
-				image.save_jpg(path)
+			#KEY_P:
+				#var image = get_viewport().get_texture().get_image()
+				#var date = Time.get_datetime_string_from_system()
+				#var file_name = "screenshot-" + date + ".jpg"
+				#var path = "res://screenshots/" + file_name
+				#var dir = DirAccess.open("res://")
+				#if not dir.dir_exists("screenshots"):
+					#dir.make_dir("screenshots")
+				#image.save_jpg(path)

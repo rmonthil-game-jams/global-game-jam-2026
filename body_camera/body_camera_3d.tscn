@@ -100,10 +100,6 @@ transform = Transform3D(3.8096997e-09, -0.08715577, -0.9961947, -1, -4.371139e-0
 visible = false
 is_fixed = true
 
-[node name="TimerMore" parent="Camera3D" unique_id=54551910 instance=ExtResource("6_rse2y")]
-transform = Transform3D(2.857275e-09, -0.08715577, -0.747146, -0.75, -4.371139e-08, -3.330669e-16, -3.265879e-08, 0.9961947, -0.06536683, 14, 6.5, -12)
-visible = false
-
 [node name="Restart" parent="Camera3D" unique_id=1318727684 instance=ExtResource("11_qfdh6")]
 transform = Transform3D(-3.809701e-09, 0.087155804, -0.9961947, -1, -4.371139e-08, 0, -4.3545054e-08, 0.9961947, 0.087155804, -17.360653, 0.5, -12)
 visible = false

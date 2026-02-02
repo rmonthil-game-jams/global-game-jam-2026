@@ -74,3 +74,13 @@ font = ExtResource("2_6ht0x")
 font_size = 480
 outline_size = 0
 horizontal_alignment = 0
+
+[node name="Label3D2" type="Label3D" parent="." unique_id=1606828545]
+transform = Transform3D(1.3113416e-07, -1, 4.371139e-08, -3.821371e-15, 4.371139e-08, 1, -1, -1.3113416e-07, 1.9106855e-15, -3.2014214e-09, -3.2014214e-09, 4.681047)
+double_sided = false
+no_depth_test = true
+modulate = Color(0, 1, 0.6666667, 1)
+text = "9/9"
+font = ExtResource("2_6ht0x")
+font_size = 480
+outline_size = 0

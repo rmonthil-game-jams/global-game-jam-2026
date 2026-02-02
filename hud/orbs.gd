@@ -18,15 +18,11 @@ var number: int = 0:
 				$AudioStreamPlayerWin.play()
 				get_parent().get_node("TimerFixed").update()
 				get_parent().get_node("TimerFixed").show()
-				get_parent().get_node("TimerMore").show()
 				var tween_more: Tween = create_tween()
 				for i in range(4):
 					tween_more.tween_property(get_parent().get_node("TimerFixed"), "position:y", get_parent().get_node("TimerFixed").position.y + 0.75, 5e-2).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-					tween_more.parallel().tween_property(get_parent().get_node("TimerMore"), "position:y", get_parent().get_node("TimerMore").position.y + 0.75, 5e-2).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 					tween_more.tween_property(get_parent().get_node("TimerFixed"), "position:y", get_parent().get_node("TimerFixed").position.y - 0.75, 5e-2).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-					tween_more.parallel().tween_property(get_parent().get_node("TimerMore"), "position:y", get_parent().get_node("TimerMore").position.y - 0.75, 5e-2).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 				tween_more.tween_property(get_parent().get_node("TimerFixed"), "position:y", get_parent().get_node("TimerFixed").position.y, 5e-2).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-				tween_more.parallel().tween_property(get_parent().get_node("TimerMore"), "position:y", get_parent().get_node("TimerMore").position.y, 5e-2).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 				# TODO: WIN ANIMATION
 			if tween:
 				tween.stop()
